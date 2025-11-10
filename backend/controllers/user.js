@@ -3,7 +3,7 @@ const Product = require("../model/productModel");
 
 const booking = async(req ,res)=>{
     const {id} = req.params;
-    const {fullName, email, address, city, pincode, contact, totalPrice} = req.body;
+    const {fullName, email, address, city, pincode, contact, totalPrice, quantity} = req.body;
     try{
         const product = await Product.findById(id)
         if(product && product.stock <= 0 ){
@@ -22,7 +22,7 @@ const booking = async(req ,res)=>{
             contact,
             totalPrice
         })
-        product.stock = product.stock -1
+        product.stock = product.stock - quantity
         product.save()
 
         return res.json({
@@ -37,7 +37,9 @@ const booking = async(req ,res)=>{
 }
 const getBookings =async(req,res)=>{
     try{
-        const orders = await Order.find({})
+        const orders = await Order.find({
+            costumerId: req.user.userId
+        }).populate("productId")
         return res.json({
             orders: orders
         })
@@ -50,7 +52,16 @@ const getBookings =async(req,res)=>{
 const removeBooking = async(req,res)=>{
     const {id} = req.params;
     try{
-
+        const order = await Order.findByIdAndDelete({_id:id})
+        if(!order){
+            return res.status(404).json({
+                error: "Order not found"
+            })
+        }
+        return res.json({
+            message: "Order removed",
+            order: order
+        })
     }catch(error){
         return res.status(404).json({
             error: error
