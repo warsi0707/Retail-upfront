@@ -8,7 +8,11 @@ const userModel = new mongoose({
         type: String,
         enum: ['ADMIN', 'USER'],
         default: 'USER'
-    }
+    },
+    orders : [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Order"
+    }]
 })
 
 const User = mongoose.model('User', userModel)
