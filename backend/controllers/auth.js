@@ -60,8 +60,30 @@ const userSignin = async(req, res)=>{
         })
     }
 }
+const userProfile = async(req, res)=>{
+    try{
+        const user = await User.findOne({_id: req.user}.userId)
+        if(!user){
+            return res.status(404).json({
+                error: "User not found"
+            })
+        }
+        return res.json({
+            user: {
+                email: user.email,
+                fullName: user.fullName,
+                role: user.role
+            }
+        })
+    }catch(error){
+        return res.status(404).json({
+            error: error
+        })
+    }
+}
 
 module.exports = {
   userSignup,
-  userSignin
+  userSignin,
+  userProfile
 };
