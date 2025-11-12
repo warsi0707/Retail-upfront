@@ -34,7 +34,7 @@ To set up the App on your local machine, follow these steps:
     npm install
     ```
 
-3. **Run the Application**:
+3. **Set environment variable**:
     ```
     Setup environment varaible
     ```
@@ -81,3 +81,8 @@ To set up the App on your local machine, follow these steps:
 
 ---
 
+
+
+- **Others**:
+
+![alt text](frontend/public/screenshot/setup.mov)
