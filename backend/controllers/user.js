@@ -5,6 +5,11 @@ const booking = async(req ,res)=>{
     const {id} = req.params;
     const {fullName, email, address, city, pincode, contact, totalPrice, quantity} = req.body;
     try{
+        if(!fullName || !email || !address || !city || !pincode || !contact || !totalPrice || !quantity){
+             return res.status(404).json({
+            error: "All input required"
+        })
+        }
         const product = await Product.findById(id)
         if(product && product.stock <= 0 ){
             return res.status(404).json({
@@ -35,6 +40,7 @@ const booking = async(req ,res)=>{
         })
     }
 }
+
 const getBookings =async(req,res)=>{
     try{
         const orders = await Order.find({

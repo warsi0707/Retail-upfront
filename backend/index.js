@@ -6,11 +6,18 @@ const authRouter = require('./routes/authRouter')
 const productRouter = require('./routes/productRoute')
 const userRouter = require('./routes/userRoute')
 const app = express()
-
+const cors = require("cors")
+const { FRONTEND_URL } = require('./utils/Utils')
+const path = require("path")
 
 DbConnect()
 
 app.use(express.json())
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use(express.urlencoded({ extended: true }));
+app.use(cors({
+    origin: FRONTEND_URL
+}))
 
 app.use("/api/v1/admin", adminRouter)
 app.use("/api/v1/auth", authRouter)

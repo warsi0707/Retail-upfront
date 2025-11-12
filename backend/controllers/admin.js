@@ -1,3 +1,4 @@
+const Order = require("../model/orderSchema");
 const Product = require("../model/productModel");
 
 const postProduct = async (req, res) => {
@@ -70,6 +71,7 @@ const deleteProduct = async (req, res) => {
   try {
     const products = await Product.findByIdAndDelete({ _id: id });
     return res.json({
+      message: "Product removed",
       product: products,
     });
   } catch (error) {
@@ -98,6 +100,18 @@ const deactivateProduct = async (req, res) => {
     });
   }
 };
+const allOrders = async(req,res)=>{
+  try{
+    const orders = await Order.find({})
+    return res.json({
+      orders: orders
+    })
+  }catch(error){
+    return res.status(404).json({
+      error: error
+    })
+  }
+}
 
 module.exports = {
   postProduct,
@@ -105,4 +119,5 @@ module.exports = {
   updateProduct,
   deleteProduct,
   deactivateProduct,
+  allOrders
 };

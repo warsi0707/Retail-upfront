@@ -13,7 +13,7 @@ const orderSchema = new mongoose.Schema({
     email: {type: String},
     address: {type: String, required: true},
     city: {type: String},
-    pincode: {type: String},
+    pincode: {type: String},    
     contact : {type: String},
     totalPrice: {type: Number, required: true},
     status: {

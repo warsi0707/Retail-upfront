@@ -28,8 +28,33 @@ const productById = async(req, res)=>{
         })
     }
 }
+const searchProduct = async(req, res)=>{
+    const {query} = req.query
+    try{
+        const products = await Product.find({
+            $or: [
+                {title: {$regex: query, $options: "i"}},
+                {category: {$regex: query, $options: "i"}}
+            ]
+        })
+        if(products.length <=0){
+            return res.status(404).json({
+                error: "Not found",
+                products: []
+            })
+        }
+        return res.json({
+            products: products
+        })
+    }catch(error){
+        return res.status(404).json({
+            error: error
+        })
+    }
+}
 
 module.exports = {
     allProducts,
-    productById
+    productById,
+    searchProduct
 }

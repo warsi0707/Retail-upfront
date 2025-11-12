@@ -6,8 +6,13 @@ const { USER_JWT_SECRET } = require("../utils/Utils");
 const userSignup = async (req, res) => {
   const { fullName, email, password } = req.body;
   try {
+    if(!fullName || !email || !password){
+        return res.status(404).json({
+            error: "All input required"
+        })
+    }
     const existingUser = await User.findOne({ email });
-    if(existingUser.email === email){
+    if(existingUser && existingUser.email === email){
         return res.status(404).json({
             error: "User already exist"
         })
@@ -30,6 +35,11 @@ const userSignup = async (req, res) => {
 const userSignin = async(req, res)=>{
     const {email, password} = req.body;
     try{
+        if(!email || !password){
+        return res.status(404).json({
+            error: "All input required"
+        })
+    }
         const findUser = await User.findOne({email})
         if(!findUser){
             return res.status(404).json({

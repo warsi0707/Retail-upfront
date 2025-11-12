@@ -1,1 +1,10 @@
 @import "tailwindcss";
+
+@theme {
+    --color-yellow-primary: #ffd743;
+    --color-gray-primary: #ededec;
+    --color-gray-secondry:#f1f0f0;
+    --color-green-primary: #0d923e;
+    --color-purple-primary: #6362fe;
+    --color-purple-secondry:#e0e7ff;
+}
